@@ -25,7 +25,7 @@ public class ProductMenu {
             System.out.println("5. 판매부진 단종 제품 삭제");
             System.out.println("9. 이전 메뉴로 이동");
             System.out.println("===================================");
-            System.out.println("원하는 관리 메뉴의 번호를 입력해 주세요 : ");
+            System.out.print("원하는 관리 메뉴의 번호를 입력해 주세요 : ");
             int selectMenu = sc.nextInt();
 
             switch (selectMenu) {
@@ -81,7 +81,7 @@ public class ProductMenu {
             default : System.out.println("잘못된 번호입니다. 확인 후 다시 입력해 주세요."); break;
         }
 
-        SearchCondition searchCondition = new SearchCondition();
+        SearchCondition searchCondition = new SearchCondition(searchOption, searchValue);
         // 주석을 지우고 searchCondition 검색조건과 검색어를 searchCondition 객체에 setting 하세요.
 
         return searchCondition;

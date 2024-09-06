@@ -1,31 +1,37 @@
 package com.hitsuni.management.product.model.service;
 
 import com.hitsuni.common.SearchCondition;
+import com.hitsuni.management.product.model.dao.ProductDAO;
 import com.hitsuni.management.product.model.dto.ProductDTO;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Map;
 
+import static com.hitsuni.common.Template.getSqlSession;
+
 public class ProductService {
+    SqlSession sqlSession = getSqlSession();
 
-    // * 주석을 지우고 Service 역할에 해당하는 메소드를 작성하세요.
-
-    // 1. 자주 사용할 DAO 객체를 선언하세요.
+    ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
 
     public List<ProductDTO> selectAllProductList() {
-
-        // 2. 전체 제품 목록을 조회하는 로직을 작성하세요.
-        // 　　아래 작성된 return null은 과제 툴 오류를 제거하고자 임의 작성하였으니 지우고 로직을 작성하세요.
-        return null;
-
+        List<ProductDTO> searchProductList = dao.selectAllProductList();
+        if(searchProductList != null && !searchProductList.isEmpty())
+            return searchProductList;
+        else
+            return null;
     }
 
     public List<ProductDTO> selectProductByCondition(SearchCondition searchCondition) {
 
         // 3. 조건에 따른 제품 목록을 조회하는 로직을 작성하세요.
-        // 　　아래 작성된 return null은 과제 툴 오류를 제거하고자 임의 작성하였으니 지우고 로직을 작성하세요.
-        return null;
-
+        // 　　아래 작성된 return null 은 과제 툴 오류를 제거하고자 임의 작성하였으니 지우고 로직을 작성하세요.
+        List<ProductDTO> searchProductList = dao.selectProductByCondition(searchCondition);
+        if(searchProductList != null && !searchProductList.isEmpty())
+            return searchProductList;
+        else
+            return null;
     }
 
     public boolean registNewProduct(ProductDTO product) {
