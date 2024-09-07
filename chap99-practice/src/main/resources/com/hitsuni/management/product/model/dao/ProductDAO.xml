@@ -60,13 +60,64 @@
         </if>
     </select>
 
-    <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요.
-            (쿼리id) insertProduct -->
+    <insert id="insertProduct" parameterType="ProductDTO">
+        INSERT INTO
+            product_info (
+             product_name,
+             origin_cost,
+             release_date,
+             discount_rate,
+             sales_quantity,
+             stock_quantity,
+             category_code,
+             production_status)
+        VALUES
+            (#{productName},
+             #{originCost},
+             #{releaseDate},
+             #{discountRate},
+             '0',
+             #{stockQuantity},
+             #{categoryCode},
+             'Y')
+    </insert>
 
     <!-- 6. 사용자가 수정을 원하는 데이터만 수정하도록 Dynamic Query를 활용한 쿼리를 작성하세요.
             (쿼리id) updateProduct -->
+    <update id="updateProduct" parameterType="ProductDTO">
+        UPDATE product_info
+            <set>
+                <if test="productName != null and productName != 'SKIP'">
+                    product_name = #{productName},
+                </if>
+                <if test="originCost != null and originCost != 'SKIP'">
+                    origin_cost = #{originCost},
+                </if>
+                <if test="releaseDate != null and releaseDate != 'SKIP'">
+                    release_date = #{realeaseDate},
+                </if>
+                <if test="discountRate != null and discountRate != 'SKIP'">
+                    discount_rate = #{discountRate},
+                </if>
+                <if test="salesQuantity != null and salesQuantity != 'SKIP'">
+                    sales_quantity = #{salesQuantity},
+                </if>
+                <if test="stockQuantity != null and stockQuantity != 'SKIP'">
+                    stock_quantity = #{stockQuantity},
+                </if>
+                <if test="categoryCode != null and categoryCode != 'SKIP'">
+                    category_code = #{categoryCode},
+                </if>
+                <if test="productionStatus != null and productionStatus != 'SKIP'">
+                    production_status = #{productionStatus}
+                </if>
+            </set>
+          WHERE product_code = #{productCode}
+    </update>
 
-    <!-- 7. 제품 정보를 삭제하는 쿼리를 작성하세요.
-            (쿼리id) deleteProduct -->
-
+    <delete id="deleteProduct" parameterType="hashMap">
+        DELETE
+          FROM product_info
+         WHERE product_code = #{productCode}
+    </delete>
 </mapper>

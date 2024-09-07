@@ -24,9 +24,6 @@ public class ProductService {
     }
 
     public List<ProductDTO> selectProductByCondition(SearchCondition searchCondition) {
-
-        // 3. 조건에 따른 제품 목록을 조회하는 로직을 작성하세요.
-        // 　　아래 작성된 return null 은 과제 툴 오류를 제거하고자 임의 작성하였으니 지우고 로직을 작성하세요.
         List<ProductDTO> searchProductList = dao.selectProductByCondition(searchCondition);
         if(searchProductList != null && !searchProductList.isEmpty())
             return searchProductList;
@@ -34,27 +31,36 @@ public class ProductService {
             return null;
     }
 
-    public boolean registNewProduct(ProductDTO product) {
-
-        // 4. 제품 정보를 등록하는 로직을 작성하세요.
-        // 　　아래 작성된 return false 과제 툴 오류를 제거하고자 임의 작성하였으니 지우고 로직을 작성하세요.
-        return false;
-
+    public boolean registerNewProduct(ProductDTO product) {
+        int res = dao.insertProduct(product);
+       if(res == 1) {
+           sqlSession.commit();
+           return true;
+       } else {
+           sqlSession.rollback();
+           return false;
+       }
     }
 
     public boolean modifyProductInfo(ProductDTO product) {
-
-        // 5. 제품 정보를 수정하는 로직을 작성하세요.
-        // 　　아래 작성된 return false 과제 툴 오류를 제거하고자 임의 작성하였으니 지우고 로직을 작성하세요.
-        return false;
-
+        int res = dao.updateProduct(product);
+        if(res == 1) {
+            sqlSession.commit();
+            return true;
+        } else {
+            sqlSession.rollback();
+            return false;
+        }
     }
 
     public boolean deleteProduct(Map<String, String> parameter) {
-
-        // 6. 제품 정보를 삭제하는 로직을 작성하세요.
-        // 　　아래 작성된 return false 과제 툴 오류를 제거하고자 임의 작성하였으니 지우고 로직을 작성하세요.
-        return false;
-
+        int res = dao.deleteProduct(parameter);
+        if(res == 1) {
+            sqlSession.commit();
+            return true;
+        } else {
+            sqlSession.rollback();
+            return false;
+        }
     }
 }
